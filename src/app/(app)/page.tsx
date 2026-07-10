@@ -6,19 +6,25 @@ import { GoodDealsSection } from "@/components/home/good-deals-section";
 import { StudentLifeSection } from "@/components/home/student-life-section";
 import { getUpcomingEvents } from "@/lib/queries/events";
 import { getLatestNews, getPartners } from "@/lib/queries/news";
+import { getCurrentProfile } from "@/lib/queries/profile";
 
 export default async function HomePage() {
-  const [events, news, partners] = await Promise.all([
+  const [events, news, partners, profile] = await Promise.all([
     getUpcomingEvents(),
     getLatestNews(),
     getPartners(),
+    getCurrentProfile(),
   ]);
 
   const [featured, ...rest] = events;
 
   return (
     <div>
-      <HomeHeader />
+      <HomeHeader
+        name={profile?.full_name?.split(" ")[0] ?? undefined}
+        city={profile?.city}
+        avatarUrl={profile?.avatar_url}
+      />
       {featured && <FeaturedEvent event={featured} />}
       {rest.length > 0 && <EventRail events={rest} />}
       <NewsSection news={news} />
