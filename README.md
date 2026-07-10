@@ -1,39 +1,43 @@
 # AVE — Application de Vie Étudiante (Aix-en-Provence)
 
-Plateforme mobile-first qui centralise événements étudiants, aides, santé,
-logement, urgences et bons plans pour les étudiants d'Aix-en-Provence.
-
-Voir [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) pour le cadrage complet
-(analyse, architecture, arborescence, wireframes, design system, schéma
-Supabase, API).
+App mobile Expo / React Native. Voir [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
+pour le cadrage produit complet (le schéma Supabase notamment reste à jour ;
+la partie architecture web y est marquée obsolète depuis le pivot Expo).
 
 ## Démarrer en local
 
 ```bash
-cp .env.example .env.local   # renseigner vos clés Supabase / Stripe
 npm install
-npm run dev
+npx expo start --web   # aperçu rapide dans le navigateur
+# ou
+npx expo start         # puis scanner le QR code avec Expo Go
 ```
 
-Ouvrir [http://localhost:3000](http://localhost:3000). Sans variables
-Supabase configurées, l'app tourne avec des données de démonstration
-(voir `src/lib/demo-data.ts`).
+Le contenu du Hub Étudiant (apps utiles, santé, urgences, aides financières,
+aides alimentaires, conseils) est data-driven : voir `src/data/cities/aix-en-provence/`.
+Ajouter une nouvelle ville = créer `src/data/cities/<slug>/` sur le même modèle
+et l'enregistrer dans `src/data/index.ts`.
 
-## Base de données Supabase
+## App native (App Store / Play Store)
 
-Le schéma SQL est dans `supabase/migrations/0001_init.sql`, les données de
-démo dans `supabase/seed.sql`. À appliquer via le CLI Supabase ou le SQL
-Editor du dashboard de votre projet.
+Ce conteneur ne peut pas compiler d'app native (Xcode nécessite macOS, un
+build Android nécessite le SDK Android). Sur une machine équipée :
 
-## App native (Capacitor)
+```bash
+npx expo prebuild
+npx expo run:ios      # ou npx expo run:android
+```
 
-Le wrapper natif encapsule l'app déployée (voir `capacitor.config.ts` pour
-le détail et les prérequis Xcode/Android Studio, non disponibles dans un
-environnement Linux).
+## Structure
+
+- `src/app/` — écrans (Expo Router, file-based)
+- `src/components/` — composants UI et composants du Hub
+- `src/data/` — contenu par ville (JSON-like TS, remplaçable par une API)
+- `src/constants/theme.ts` — design system (couleurs, rayons, ombres, dégradés)
+- `supabase/` — schéma SQL et données de démo (backend, indépendant du frontend)
 
 ## Scripts
 
-- `npm run dev` — serveur de développement
-- `npm run build` — build de production
+- `npm run web` / `npx expo start --web` — aperçu web (pratique pour itérer vite)
+- `npx expo start` — serveur de développement (iOS/Android/web)
 - `npm run lint` — ESLint
-- `npm run cap:sync` — synchronise le wrapper Capacitor après un build

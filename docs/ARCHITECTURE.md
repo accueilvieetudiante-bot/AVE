@@ -2,6 +2,17 @@
 
 Document de cadrage produit + technique, avant développement écran par écran.
 
+> **Mise à jour stack (pivot Expo / React Native).** Ce document a été rédigé
+> pour une PWA Next.js. Le projet a depuis migré vers **React Native + Expo
+> Router** (voir demande "Hub Étudiant Intelligent") pour publier une vraie
+> app native App Store/Play Store. Les sections `1` (analyse produit), `7`
+> (schéma Supabase) et `8` (API/Server Actions → à traduire en appels client
+> Supabase directs ou en Edge Functions) restent valables telles quelles.
+> Les sections `2`, `3`, `5`, `6` (architecture Next.js, arborescence,
+> composants shadcn/ui, tokens Tailwind CSS) sont **obsolètes** : le code
+> actuel vit dans `src/app` (Expo Router), `src/components`, `src/data`
+> (contenu data-driven par ville) — voir le code pour l'arborescence à jour.
+
 ---
 
 ## 1. Analyse du projet
