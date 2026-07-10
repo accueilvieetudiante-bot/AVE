@@ -9,6 +9,7 @@ import type {
   PartnerRow,
   AssistanceCategory,
   AssistanceItem,
+  UserProfile,
 } from "@/types/database";
 
 const inDays = (d: number) => new Date(Date.now() + d * 86_400_000).toISOString();
@@ -493,3 +494,15 @@ export const demoAssistanceItems: AssistanceItem[] = [
     sort_order: 4,
   },
 ];
+
+export const demoProfile: UserProfile = {
+  id: "demo-user",
+  full_name: "Camille Martin",
+  avatar_url: null,
+  university: "Aix-Marseille Université",
+  field_of_study: "Licence Informatique",
+  campus: "Campus Schuman",
+  city: "Aix-en-Provence",
+  push_subscription: null,
+  created_at: new Date().toISOString(),
+};
